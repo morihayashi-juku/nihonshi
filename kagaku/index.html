@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1f5f8b">
+<title>化学 無機・有機 暗記帳｜共通テスト対策</title>
+<style>
+:root{
+  --bg:#f1f5f8; --card:#fbfdfe; --ink:#1f2a33; --sub:#66737d; --line:#d9e2e8;
+  --accent:#1f5f8b; --accent2:#c27a14; --ok:#2e7d4f; --ng:#c0392b; --chip:#e5edf2;
+  --accent-soft:#e7f0f7;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Noto Sans CJK JP","Yu Gothic",Meiryo,sans-serif;
+  font-size:16px;line-height:1.6}
+button{font:inherit;color:inherit;cursor:pointer;border:none;background:none}
+.wrap{max-width:680px;margin:0 auto;padding:16px 16px 120px}
+header.top{background:var(--accent);color:#fff;padding:14px 16px}
+header.top .in{max-width:680px;margin:0 auto;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+header.top h1{font-size:20px;margin:0;letter-spacing:.04em}
+header.top span{font-size:12px;opacity:.85}
+h2.sec{font-size:14px;color:var(--sub);margin:20px 0 8px;letter-spacing:.05em}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mode{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px 12px;text-align:left}
+.mode b{display:block;font-size:15px}
+.mode small{color:var(--sub);font-size:12px;line-height:1.4;display:block}
+.mode.on{border-color:var(--accent);background:var(--accent-soft)}
+.mode.on b{color:var(--accent)}
+.group{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px}
+.ghead{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.ghead b{font-size:14px}
+.ghead button{font-size:12px;color:var(--accent);padding:4px 8px;border-radius:8px;background:var(--accent-soft)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{background:var(--chip);border:1.5px solid transparent;border-radius:999px;padding:6px 11px;font-size:13.5px;line-height:1.3}
+.chip .n{font-size:11px;color:var(--sub);margin-left:3px}
+.chip.on{background:var(--accent);color:#fff}
+.chip.on .n{color:#d3e6f3}
+.allrow{display:flex;gap:8px;margin-bottom:8px}
+.allrow button{font-size:13px;padding:6px 12px;border-radius:8px;background:var(--card);border:1px solid var(--line)}
+.opts{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 12px}
+.opt{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);gap:8px;flex-wrap:wrap}
+.opt:last-child{border-bottom:none}
+.opt label{font-size:14px}
+.seg{display:flex;background:var(--chip);border-radius:9px;padding:2px;flex-wrap:wrap}
+.seg button{padding:5px 10px;border-radius:7px;font-size:13px}
+.seg button.on{background:var(--card);box-shadow:0 1px 2px rgba(0,0,0,.12);font-weight:bold;color:var(--accent)}
+.bar{position:fixed;left:0;right:0;bottom:0;background:rgba(241,245,248,.96);border-top:1px solid var(--line);
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom));backdrop-filter:blur(6px);z-index:5}
+.bar .in{max-width:680px;margin:0 auto;display:flex;gap:10px;align-items:center}
+.bar .info{font-size:12px;color:var(--sub);flex:1;line-height:1.35}
+.btn{background:var(--accent);color:#fff;border-radius:12px;padding:12px 20px;font-weight:bold;font-size:16px}
+.btn:disabled{opacity:.4}
+.btn.sub{background:var(--card);color:var(--accent);border:2px solid var(--accent)}
+.btn.wide{width:100%}
+.missinfo{font-size:12px;color:var(--sub);margin-top:6px;display:flex;justify-content:space-between;align-items:center}
+.missinfo button{color:var(--ng);font-size:12px;text-decoration:underline}
+/* quiz */
+.qtop{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.qtop .quit{font-size:13px;color:var(--sub);padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+.prog{flex:1;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--accent2);transition:width .2s}
+.cnt{font-size:13px;color:var(--sub);min-width:58px;text-align:right}
+.qcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 16px;box-shadow:0 2px 6px rgba(20,60,90,.06)}
+.badge{display:inline-block;font-size:12px;background:var(--chip);color:var(--accent);border-radius:6px;padding:2px 8px;margin-bottom:8px;font-weight:bold}
+.qtext{font-size:18px;font-weight:bold;line-height:1.6;margin:0 0 4px}
+.reveal{margin-top:14px}
+.ansbox{background:#fff7e3;border:2px dashed var(--accent2);border-radius:12px;padding:12px;text-align:center;font-size:20px;font-weight:bold;color:var(--accent)}
+.ansbox small{display:block;font-size:12px;color:var(--sub);font-weight:normal}
+.choices{display:grid;gap:8px;margin-top:14px}
+.choice{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 14px;text-align:left;font-size:16px;line-height:1.4}
+.choice.ok{border-color:var(--ok);background:#e9f6ee;color:var(--ok);font-weight:bold}
+.choice.ng{border-color:var(--ng);background:#fdecea;color:var(--ng)}
+.choice:disabled{cursor:default}
+.judge{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.judge button{padding:14px;border-radius:12px;font-weight:bold;font-size:16px}
+.judge .o{background:#e9f6ee;color:var(--ok);border:2px solid var(--ok)}
+.judge .x{background:#fdecea;color:var(--ng);border:2px solid var(--ng)}
+.inrow{display:flex;gap:8px;margin-top:14px}
+.inrow input{flex:1;min-width:0;font-size:17px;padding:12px;border-radius:12px;border:2px solid var(--line);background:#fff;font-family:inherit}
+.inrow input:focus{outline:none;border-color:var(--accent2)}
+.hint{font-size:12px;color:var(--sub);margin-top:6px}
+.verdict{font-size:22px;font-weight:bold;text-align:center;margin:12px 0 6px}
+.verdict.ok{color:var(--ok)} .verdict.ng{color:var(--ng)}
+.yours{font-size:13px;color:var(--sub);text-align:center}
+.next{margin-top:14px}
+.small-link{display:block;margin:10px auto 0;font-size:13px;color:var(--sub);text-decoration:underline}
+/* result */
+.score{text-align:center;padding:20px 0 10px}
+.score .big{font-size:44px;font-weight:bold;color:var(--accent)}
+.score .pct{color:var(--sub)}
+.wrong{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px}
+.wrong .q{font-size:14px}
+.wrong .a{font-size:15px;font-weight:bold;color:var(--accent);margin-top:2px}
+.wrong .e{font-size:11px;color:var(--sub)}
+.rbtns{display:grid;gap:8px;margin:14px 0}
+/* list */
+.lhead{position:sticky;top:0;background:var(--bg);padding:8px 0;z-index:2;display:flex;gap:8px;align-items:center}
+.lera{margin:18px 0 6px;font-size:16px;color:#fff;background:var(--accent);border-radius:10px;padding:6px 12px}
+.lera small{font-size:11px;opacity:.85;margin-left:6px}
+.litem{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 12px;margin-bottom:6px;width:100%;text-align:left;display:block}
+.litem .q{font-size:14px}
+.litem .a{margin-top:4px;font-weight:bold;color:var(--accent);font-size:15px;visibility:hidden}
+.litem .a::before{content:"→ "}
+.litem.open .a{visibility:visible}
+.litem .tap{font-size:11px;color:var(--sub);float:right}
+.litem.open .tap{display:none}
+.litem.miss{border-left:4px solid var(--ng)}
+footer{font-size:11px;color:var(--sub);text-align:center;margin-top:30px}
+.linkcard{display:block;text-decoration:none;color:inherit;margin-bottom:8px}
+.linkcard b::after{content:" →";color:var(--accent)}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<header class="top"><div class="in"><h1>化学 無機・有機 暗記帳</h1><span>共通テスト対策 ／ 問題を解いて覚える</span></div></header>
+
+<!-- ホーム -->
+<main id="home" class="wrap">
+  <h2 class="sec">やり方をえらぶ</h2>
+  <div class="modes" id="modes"></div>
+
+  <h2 class="sec">範囲をえらぶ</h2>
+  <div class="allrow"><button id="allOn">すべて選ぶ</button><button id="allOff">すべて外す</button></div>
+  <div id="groups"></div>
+
+  <div id="optWrap">
+    <h2 class="sec">設定</h2>
+    <div class="opts">
+      <div class="opt"><label>問題数</label><div class="seg" id="segCount"></div></div>
+      <div class="opt"><label>出す順番</label><div class="seg" id="segOrder"></div></div>
+      <div class="opt"><label>出す問題</label><div class="seg" id="segMiss"></div></div>
+    </div>
+    <div class="missinfo"><span id="missCount"></span><button id="resetMiss">苦手の記録を消す</button></div>
+  </div>
+  <div id="typeWrap">
+    <h2 class="sec">問題の種類</h2>
+    <div class="opts"><div class="opt"><label>しぼりこみ</label><div class="seg" id="segType"></div></div></div>
+  </div>
+
+  <h2 class="sec">ほかの暗記帳</h2>
+  <a class="mode linkcard" href="../"><b>日本史 文化史 暗記帳</b><small>共通テスト対策の日本史・文化史（原始〜戦後）</small></a>
+  <a class="mode linkcard" href="../seibutsu/"><b>高校生物 暗記帳</b><small>高校生物ゼロから講座（全12回）の講義ノート・問題演習</small></a>
+
+  <footer>答えは教科書で一般的な説明に従っています。入力モードは化学式を半角で打ってOK（H2O、Cu2+ など）。<br>苦手の記録はこの端末のブラウザにだけ保存されます。</footer>
+</main>
+
+<div class="bar" id="homeBar"><div class="in"><div class="info" id="selInfo"></div><button class="btn" id="startBtn">はじめる</button></div></div>
+
+<!-- 問題 -->
+<main id="quiz" class="wrap hidden">
+  <div class="qtop"><button class="quit" id="quitBtn">やめる</button><div class="prog"><i id="progBar"></i></div><div class="cnt" id="cnt"></div></div>
+  <div class="qcard" id="qcard"></div>
+</main>
+
+<!-- 結果 -->
+<main id="result" class="wrap hidden"></main>
+
+<!-- 一覧 -->
+<main id="list" class="wrap hidden"></main>
+
+<script src="data-muki.js"></script>
+<script src="data-yuuki.js"></script>
+<script>
+// ---------- 単元 ----------
+const UNITS = [
+  {id:"hal",   name:"水素・貴ガス・ハロゲン",     period:"17・18族",            group:"無機"},
+  {id:"chal",  name:"酸素・硫黄",                 period:"16族",                group:"無機"},
+  {id:"nm",    name:"窒素・リン・炭素・ケイ素",   period:"15・14族",            group:"無機"},
+  {id:"gas",   name:"気体の性質・捕集・乾燥",     period:"気体まとめ",          group:"無機"},
+  {id:"typ",   name:"典型金属",                   period:"1・2族・Al・Zn・Sn・Pb", group:"無機"},
+  {id:"trans", name:"遷移金属",                   period:"Fe・Cu・Ag・Cr・Mn など", group:"無機"},
+  {id:"ion",   name:"沈殿・錯イオン",             period:"金属イオンの反応",    group:"無機"},
+  {id:"ind",   name:"製錬・イオン化傾向・工業製法", period:"金属・工業化学",    group:"無機"},
+  {id:"hc",    name:"炭化水素",                   period:"アルカン・アルケン・アルキン", group:"有機"},
+  {id:"oxy",   name:"アルコール・アルデヒド・ケトン", period:"酸素を含む化合物", group:"有機"},
+  {id:"acid",  name:"カルボン酸・エステル・油脂", period:"セッケンを含む",      group:"有機"},
+  {id:"arom",  name:"芳香族化合物",               period:"ベンゼン・フェノール・アニリン", group:"有機"},
+  {id:"sug",   name:"糖類",                       period:"単糖・二糖・多糖",    group:"有機"},
+  {id:"aa",    name:"アミノ酸・タンパク質・核酸", period:"酵素を含む",          group:"有機"},
+  {id:"poly",  name:"合成高分子化合物",           period:"繊維・樹脂・ゴム",    group:"有機"},
+  {id:"det",   name:"検出・元素分析・分離",       period:"有機化合物の扱い方",  group:"有機"},
+];
+const TYPES = [["all","すべて"],["w","物質・化学式"],["c","色"],["m","製法・反応"],["t","用語・性質"]];
+
+// ---------- データ準備 ----------
+const RAW = RAW_MUKI + "\n" + RAW_YUUKI;
+const UNIT_IDX = {}; UNITS.forEach((u,i)=>UNIT_IDX[u.id]=i);
+const QS = [];
+{ const cnt={};
+  RAW.trim().split("\n").forEach(line=>{
+    const p=line.split("|"); if(p.length<4) return;
+    const [unit,tag,q,a]=p; cnt[unit]=(cnt[unit]||0)+1;
+    QS.push({id:unit+"-"+cnt[unit], unit, tag, q, alts:a.split("／"), ans:a});
+  });
+}
+
+// ---------- 保存 ----------
+const KEY="kagaku-ankicho-v1";
+let store={miss:{}, sel:null, mode:"flash", count:20, order:"rand", onlyMiss:false, type:"all"};
+try{ const s=JSON.parse(localStorage.getItem(KEY)||"null"); if(s) store=Object.assign(store,s); }catch(e){}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(store)); }catch(e){} }
+
+// ---------- ホーム ----------
+const MODES=[
+  {id:"flash", t:"一問一答", d:"タップで答えを見て、○×を自分でつける"},
+  {id:"choice", t:"4択", d:"4つの中から選ぶ（スマホ向き）"},
+  {id:"input", t:"入力", d:"答えを打ちこんで覚える"},
+  {id:"list", t:"一覧で見る", d:"問題と答えを一覧で。タップで答え"},
+];
+let sel = new Set((store.sel||UNITS.map(u=>u.id)).filter(id=>id in UNIT_IDX));
+const $=id=>document.getElementById(id);
+
+function typeOk(x){ return store.type==="all" || x.tag===store.type; }
+function renderModes(){
+  $("modes").innerHTML = MODES.map(m=>`<button class="mode ${store.mode===m.id?"on":""}" data-m="${m.id}"><b>${m.t}</b><small>${m.d}</small></button>`).join("");
+  $("modes").querySelectorAll(".mode").forEach(b=>b.onclick=()=>{store.mode=b.dataset.m; save(); renderHome();});
+}
+function renderGroups(){
+  const groups=[...new Set(UNITS.map(u=>u.group))];
+  $("groups").innerHTML = groups.map(g=>{
+    const us=UNITS.filter(u=>u.group===g);
+    return `<div class="group"><div class="ghead"><b>${g}</b><button data-g="${g}">まとめて切りかえ</button></div><div class="chips">`+
+      us.map(u=>{const n=QS.filter(x=>x.unit===u.id && typeOk(x)).length;
+        return `<button class="chip ${sel.has(u.id)?"on":""}" data-e="${u.id}">${u.name}<span class="n">${n}</span></button>`}).join("")+`</div></div>`;
+  }).join("");
+  $("groups").querySelectorAll(".chip").forEach(c=>c.onclick=()=>{const id=c.dataset.e; sel.has(id)?sel.delete(id):sel.add(id); store.sel=[...sel]; save(); renderHome();});
+  $("groups").querySelectorAll(".ghead button").forEach(b=>b.onclick=()=>{
+    const ids=UNITS.filter(u=>u.group===b.dataset.g).map(u=>u.id);
+    const allOn=ids.every(i=>sel.has(i)); ids.forEach(i=>allOn?sel.delete(i):sel.add(i)); store.sel=[...sel]; save(); renderHome();});
+}
+function seg(elId, items, key){
+  $(elId).innerHTML = items.map(([v,t])=>`<button class="${store[key]===v?"on":""}" data-v="${v}">${t}</button>`).join("");
+  $(elId).querySelectorAll("button").forEach(b=>b.onclick=()=>{
+    let v=b.dataset.v; if(key==="count") v=+v; if(key==="onlyMiss") v=(v==="true");
+    store[key]=v; save(); renderHome();});
+}
+function currentPool(){
+  const base=QS.filter(x=>sel.has(x.unit) && typeOk(x));
+  return (store.onlyMiss && store.mode!=="list") ? base.filter(x=>store.miss[x.id]) : base;
+}
+function renderHome(){
+  renderModes(); renderGroups();
+  $("optWrap").classList.toggle("hidden", store.mode==="list");
+  seg("segCount", [[10,"10"],[20,"20"],[50,"50"],[0,"全部"]], "count");
+  seg("segOrder", [["rand","ランダム"],["seq","単元順"]], "order");
+  seg("segMiss", [[false,"すべて"],[true,"苦手だけ"]], "onlyMiss");
+  seg("segType", TYPES, "type");
+  const nm=Object.keys(store.miss).length;
+  $("missCount").textContent = `苦手（まちがえた問題）：${nm}問`;
+  const n=currentPool().length;
+  const m=MODES.find(x=>x.id===store.mode).t;
+  if(store.mode==="list") $("selInfo").innerHTML=`${m}<br>${sel.size}単元・${n}問`;
+  else { const k=store.count?Math.min(store.count,n):n; $("selInfo").innerHTML=`${m}<br>${sel.size}単元・${n}問から ${k}問`; }
+  $("startBtn").disabled = n===0;
+  $("startBtn").textContent = store.mode==="list"?"ひらく":"はじめる";
+}
+$("allOn").onclick=()=>{sel=new Set(UNITS.map(u=>u.id)); store.sel=[...sel]; save(); renderHome();};
+$("allOff").onclick=()=>{sel=new Set(); store.sel=[]; save(); renderHome();};
+$("resetMiss").onclick=()=>{ if(confirm("苦手の記録をすべて消しますか？")){store.miss={}; save(); renderHome();} };
+$("startBtn").onclick=()=>{ if(store.mode==="list") openList(); else startQuiz(currentPool()); };
+
+// ---------- 共通 ----------
+function shuffle(a){a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a;}
+function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function show(id){ ["home","quiz","result","list"].forEach(x=>$(x).classList.toggle("hidden",x!==id)); $("homeBar").classList.toggle("hidden",id!=="home"); window.scrollTo(0,0); }
+const unitName=id=>UNITS[UNIT_IDX[id]].name;
+const fmtAns=s=>esc(s.split("／").join(" ／ "));
+function norm(s){
+  return s.normalize("NFKC").toLowerCase().replace(/⁄/g,"/")
+    .replace(/[\s『』「」〔〕（）()\[\]・･、。,，.〜~\-−‐–—―＝=]/g,"")
+    .replace(/ヶ/g,"ケ");
+}
+
+// ---------- クイズ ----------
+let Q=[], qi=0, results=[], mode="flash";
+function startQuiz(pool){
+  mode=store.mode;
+  let list = store.order==="seq" ? pool.slice().sort((a,b)=>UNIT_IDX[a.unit]-UNIT_IDX[b.unit]) : shuffle(pool);
+  if(store.count && store.order==="rand") list=list.slice(0,store.count);
+  if(store.count && store.order==="seq"){ // 単元順でも範囲全体から均等に
+    const pick=new Set(shuffle(list.map((_,i)=>i)).slice(0,store.count)); list=list.filter((_,i)=>pick.has(i)); }
+  Q=list; qi=0; results=[]; show("quiz"); renderQ();
+}
+function record(x, ok){
+  results.push({x,ok});
+  if(ok) delete store.miss[x.id]; else store.miss[x.id]=1;
+  save();
+}
+function head(x){ return `<span class="badge">${esc(unitName(x.unit))}</span><p class="qtext">${esc(x.q)}</p>`; }
+function nextBtn(){ return `<button class="btn wide next" id="nextBtn">${qi+1<Q.length?"次へ":"結果を見る"}</button>`; }
+function bindNext(){ const b=$("nextBtn"); b.onclick=()=>{qi++; qi<Q.length?renderQ():showResult();}; b.focus({preventScroll:true}); }
+function renderQ(){
+  const x=Q[qi];
+  $("cnt").textContent=`${qi+1} / ${Q.length}`;
+  $("progBar").style.width=(qi/Q.length*100)+"%";
+  const c=$("qcard");
+  if(mode==="flash"){
+    c.innerHTML = head(x)+`<div class="reveal"><button class="btn wide sub" id="showA">答えを見る</button></div>`;
+    $("showA").onclick=()=>{
+      c.querySelector(".reveal").innerHTML=`<div class="ansbox">${esc(x.alts[0])}</div>`+
+        (x.alts.length>1?`<div class="yours">別の言い方：${esc(x.alts.slice(1).join("、"))}</div>`:"")+
+        `<div class="judge"><button class="o" id="jo">○ 覚えてた</button><button class="x" id="jx">× まだ</button></div>`;
+      const go=ok=>{record(x,ok); qi++; qi<Q.length?renderQ():showResult();};
+      $("jo").onclick=()=>go(true); $("jx").onclick=()=>go(false);
+    };
+  } else if(mode==="choice"){
+    const opts = choicesFor(x);
+    c.innerHTML = head(x)+`<div class="choices">`+opts.map(o=>`<button class="choice" data-v="${esc(o)}">${esc(o)}</button>`).join("")+`</div><div id="after"></div>`;
+    c.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{
+      const right=x.alts[0];
+      const ok = b.dataset.v===right;
+      c.querySelectorAll(".choice").forEach(bb=>{bb.disabled=true; if(bb.dataset.v===right) bb.classList.add("ok");});
+      if(!ok) b.classList.add("ng");
+      record(x,ok);
+      const extra = x.alts.length>1 ? `<div class="yours">別の言い方：${esc(x.alts.slice(1).join("、"))}</div>` : "";
+      $("after").innerHTML = `<div class="verdict ${ok?"ok":"ng"}">${ok?"○ 正解":"× ざんねん"}</div>`+extra+nextBtn();
+      bindNext();
+    });
+  } else if(mode==="input"){
+    c.innerHTML = head(x)+`<form class="inrow" id="inForm" autocomplete="off"><input id="inBox" placeholder="答えを入力" enterkeyhint="done" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn" type="submit">答え合わせ</button></form><div class="hint">化学式は半角で OK（H2O、Cu2+、[Ag(NH3)2]+ など）。ローマ数字は (II) のように書く。</div><button class="small-link" id="giveUp">わからない（答えを見る）</button><div id="after"></div>`;
+    const box=$("inBox"); setTimeout(()=>box.focus(),50);
+    const finish=(val,given)=>{
+      const ok = !given && x.alts.some(a=>norm(a)===norm(val));
+      $("inForm").querySelectorAll("input,button").forEach(e=>e.disabled=true); $("giveUp").classList.add("hidden");
+      record(x,ok);
+      $("after").innerHTML = `<div class="verdict ${ok?"ok":"ng"}">${ok?"○ 正解":"× ざんねん"}</div>`+
+        `<div class="ansbox"><small>答え</small>${fmtAns(x.ans)}</div>`+
+        (!ok && val ? `<div class="yours">あなたの答え：${esc(val)}</div><button class="small-link" id="fix">表記のちがいなど、正解にしてよい → ○にする</button>`:"")+nextBtn();
+      if($("fix")) $("fix").onclick=()=>{ results[results.length-1].ok=true; delete store.miss[x.id]; save();
+        $("after").querySelector(".verdict").className="verdict ok"; $("after").querySelector(".verdict").textContent="○ 正解（自分で判定）"; $("fix").remove(); };
+      bindNext();
+    };
+    $("inForm").onsubmit=e=>{e.preventDefault(); if(box.value.trim()==="") return; finish(box.value,false);};
+    $("giveUp").onclick=()=>finish("",true);
+  }
+}
+
+// ---------- 4択の選択肢づくり ----------
+const hasJa = s => /[぀-ヿ一-鿿]/.test(s);
+const isNum = s => /^[0-9]+$/.test(norm(s));
+function parseOpts(q){
+  const m=q.match(/（([^（）]*／[^（）]*)）/g); if(!m) return null;
+  const last=m[m.length-1].slice(1,-1).split("／").map(s=>s.trim()).filter(Boolean);
+  return last.length>=2 ? last : null;
+}
+function choicesFor(x){
+  const correct=x.alts[0];
+  const fixed=parseOpts(x.q);
+  if(fixed && fixed.includes(correct)) return shuffle(fixed);
+  const bad=new Set(x.alts.map(norm));
+  const ja=hasJa(correct), num=isNum(correct);
+  const shapeOk=y=>{ const a=y.alts[0]; return hasJa(a)===ja && isNum(a)===num; };
+  const ok=y=>y!==x && shapeOk(y) && !y.alts.some(a=>bad.has(norm(a)));
+  const grp=UNITS[UNIT_IDX[x.unit]].group;
+  const tiers=[
+    QS.filter(y=>ok(y)&&y.tag===x.tag&&y.unit===x.unit),
+    QS.filter(y=>ok(y)&&y.tag===x.tag&&UNITS[UNIT_IDX[y.unit]].group===grp),
+    QS.filter(y=>ok(y)&&y.tag===x.tag),
+    QS.filter(y=>ok(y)),
+  ];
+  const picked=[]; const seen=new Set([norm(correct)]);
+  for(const t of tiers){
+    for(const y of shuffle(t)){
+      const k=norm(y.alts[0]); if(seen.has(k)) continue; seen.add(k); picked.push(y.alts[0]);
+      if(picked.length===3) break;
+    }
+    if(picked.length===3) break;
+  }
+  return shuffle([correct,...picked]);
+}
+$("quitBtn").onclick=()=>{ if(results.length===0 || confirm("ここでやめて結果を見ますか？")) results.length? showResult() : (show("home"),renderHome()); };
+
+function showResult(){
+  const n=results.length, ok=results.filter(r=>r.ok).length;
+  const wrong=results.filter(r=>!r.ok);
+  const r=$("result");
+  r.innerHTML = `<div class="score"><div class="big">${ok} / ${n}</div><div class="pct">正答率 ${n?Math.round(ok/n*100):0}%</div></div>
+    <div class="rbtns">${wrong.length?`<button class="btn wide" id="again">まちがえた ${wrong.length}問だけ もう一度</button>`:""}
+    <button class="btn wide sub" id="same">同じ範囲で もう一度</button>
+    <button class="btn wide sub" id="toHome">トップへもどる</button></div>`+
+    (wrong.length?`<h2 class="sec">まちがえた問題</h2>`+wrong.map(({x})=>`<div class="wrong"><div class="e">${esc(unitName(x.unit))}</div><div class="q">${esc(x.q)}</div><div class="a">${fmtAns(x.ans)}</div></div>`).join(""):`<p style="text-align:center">全問正解！</p>`);
+  show("result");
+  if($("again")) $("again").onclick=()=>{ const keepCount=store.count; store.count=0; startQuiz(wrong.map(w=>w.x)); store.count=keepCount; };
+  $("same").onclick=()=>startQuiz(currentPool());
+  $("toHome").onclick=()=>{show("home"); renderHome();};
+}
+
+// ---------- 一覧 ----------
+function openList(){
+  const pool=currentPool();
+  const l=$("list");
+  let html=`<div class="lhead"><button class="btn sub" id="lBack">もどる</button><button class="btn sub" id="lAll">答えを全部表示</button></div>`;
+  UNITS.forEach(u=>{
+    const items=pool.filter(x=>x.unit===u.id); if(!items.length) return;
+    html+=`<h3 class="lera">${u.name}<small>${u.period}</small></h3>`+items.map(x=>`<button class="litem ${store.miss[x.id]?"miss":""}"><span class="tap">タップ</span><div class="q">${esc(x.q)}</div><div class="a">${fmtAns(x.ans)}</div></button>`).join("");
+  });
+  l.innerHTML=html; show("list");
+  l.querySelectorAll(".litem").forEach(b=>b.onclick=()=>b.classList.toggle("open"));
+  let allOpen=false;
+  $("lAll").onclick=()=>{allOpen=!allOpen; l.querySelectorAll(".litem").forEach(b=>b.classList.toggle("open",allOpen)); $("lAll").textContent=allOpen?"答えをかくす":"答えを全部表示";};
+  $("lBack").onclick=()=>{show("home"); renderHome();};
+}
+
+renderHome();
+</script>
+</body>
+</html>
