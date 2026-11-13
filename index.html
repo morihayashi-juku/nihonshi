@@ -106,6 +106,8 @@ h2.sec{font-size:14px;color:var(--sub);margin:20px 0 8px;letter-spacing:.05em}
 .litem.open .tap{display:none}
 .litem.miss{border-left:4px solid var(--ng)}
 footer{font-size:11px;color:var(--sub);text-align:center;margin-top:30px}
+.linkcard{display:block;text-decoration:none;color:inherit}
+.linkcard b::after{content:" →";color:var(--accent)}
 .hidden{display:none!important}
 </style>
 </head>
@@ -130,6 +132,9 @@ footer{font-size:11px;color:var(--sub);text-align:center;margin-top:30px}
     </div>
     <div class="missinfo"><span id="missCount"></span><button id="resetMiss">苦手の記録を消す</button></div>
   </div>
+  <h2 class="sec">ほかの暗記帳</h2>
+  <a class="mode linkcard" href="seibutsu/"><b>高校生物 暗記帳</b><small>高校生物ゼロから講座（全12回）の講義ノート・問題演習（タップ／入力）</small></a>
+
   <footer>答えは教科書で一般的な説明に従っています。<br>苦手の記録はこの端末のブラウザにだけ保存されます。</footer>
 </main>
 
